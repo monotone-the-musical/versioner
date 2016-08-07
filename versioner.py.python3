@@ -22,6 +22,8 @@ from pick import pick
 # versionval    6
 # comment       7
 
+blankfile="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
 class loadfile(object):
   def __init__(self,name,newname="",comment=""):
 
@@ -289,7 +291,7 @@ def check_if_exists(vault,localmetadata):
       hashexists=True
   return [hashexists,fileexists]
 
-def copyfile(sourcefile,destfile,vault,delfile=False,filehashval="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"):
+def copyfile(sourcefile,destfile,vault,delfile=False,filehashval=blankfile):
   if delfile:
     hashcount = 0
     with open(vault+"/versions.table","r") as inputfile:
@@ -335,7 +337,7 @@ def remove_from_table(vault, hashvalue, filename): #FIX
   os.rename(vault+"/versions.table.updated",vault+"/versions.table")
 
 def gen_hash(somefile):
-  filehashval = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  filehashval = blankfile
   BUF_SIZE = 65536  # read in 64k blocks
   sha256 = hashlib.sha256()
   with open(somefile, 'rb') as f:
