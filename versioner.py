@@ -129,7 +129,6 @@ class loadfile(object):
       print ("\nVersions available:\n")
       for arecord in versionlist:
         if arecord[4] != "":
-          #basename arecord[1] FIX
           print (" > (%s) %s%s - %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
         else:
           print (" > (%s) %s%s" % (arecord[3],basename(arecord[1]),arecord[2]))
@@ -197,7 +196,7 @@ class loadfile(object):
         print ("\nFile %s restored." % (file_to_restore))
     print ("")
 
-  def restore_backup_by_name(self,delfile=False,latest=False):  # FIX for deleting files
+  def restore_backup_by_name(self,delfile=False,latest=False):
     versionlist=[]
     backedup=False
     if not os.path.isfile(self.vault+"/versions.table"):
@@ -241,7 +240,7 @@ class loadfile(object):
       file_permissions = ("%s" % (versionlist[index][5]))
       if self.newname:
         file_to_restore=self.newname
-      copyfile(self.vault+"/versions/"+hash_to_restore,file_to_restore,self.vault,delfile,self.meta[0]) # FIX
+      copyfile(self.vault+"/versions/"+hash_to_restore,file_to_restore,self.vault,delfile,hash_to_restore)
       if delfile:
         remove_from_table(self.vault, hash_to_restore, file_to_restore)
         print ("\nFile %s removed from vault." % (file_to_restore))
@@ -327,7 +326,7 @@ def copyfile(sourcefile,destfile,vault,delfile=False,filehashval=blankfile):
           sys.exit()
     shutil.copy2(sourcefile, destfile)
 
-def remove_from_table(vault, hashvalue, filename): #FIX
+def remove_from_table(vault, hashvalue, filename):
   with open(vault+"/versions.table","r") as inputfile:
     with open(vault+"/versions.table.updated","a") as outputfile: 
       for line in inputfile:
