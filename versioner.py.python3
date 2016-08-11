@@ -10,6 +10,7 @@ import datetime
 import configparser
 import re
 from os.path import expanduser
+from os.path import basename
 from pick import pick
 
 # .meta:
@@ -128,9 +129,9 @@ class loadfile(object):
       print ("\nVersions available:\n")
       for arecord in versionlist:
         if arecord[4] != "":
-          print (" > (%s) %s%s - %s" % (arecord[3],arecord[1],arecord[2],arecord[4]))
+          print (" > (%s) %s%s - %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
         else:
-          print (" > (%s) %s%s" % (arecord[3],arecord[1],arecord[2]))
+          print (" > (%s) %s%s" % (arecord[3],basename(arecord[1]),arecord[2]))
     print ("")
 
   def list_backups_for_dir(self): 
@@ -148,9 +149,9 @@ class loadfile(object):
       print ("\nFiles that have been backed up in %s:\n" % (self.dirname))
       for arecord in versionlist:
         if arecord[4] != "":
-          print (" > (%s) %s%s - %s" % (arecord[3],arecord[1],arecord[2],arecord[4]))
+          print (" > (%s) %s%s - %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
         else:
-          print (" > (%s) %s%s" % (arecord[3],arecord[1],arecord[2]))
+          print (" > (%s) %s%s" % (arecord[3],basename(arecord[1]),arecord[2]))
     print ("")
 
   def restore_backups_for_dir(self,delfile=False):
@@ -171,7 +172,7 @@ class loadfile(object):
     if len(versionlist) > 0:
       menulist=[]
       for arecord in versionlist:
-        menulist.append(" (%s) %s%s %s" % (arecord[3],arecord[1],arecord[2],arecord[4]))
+        menulist.append(" (%s) %s%s %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
       menulist.append(" abort")
       if delfile:
         option, index = pick(menulist, "Backups available for deletion from vault:")
@@ -219,7 +220,7 @@ class loadfile(object):
     if len(versionlist) > 0:
       menulist=[]
       for arecord in versionlist:
-        menulist.append(" (%s) %s%s %s" % (arecord[3],arecord[1],arecord[2],arecord[4]))
+        menulist.append(" (%s) %s%s %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
       menulist.append(" abort")
       if delfile:
         option, index = pick(menulist, "Versions available for removal from vault:")

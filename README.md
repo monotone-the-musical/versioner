@@ -53,7 +53,6 @@ Some examples:
 ### Note ###
 
 * Versioner is not intended as a complete system backup solution, nor is it a complete version-control system (i.e. GIT). It is merely a command-line tool to help with your day-to-day workflow.
-* Current version: v1.1
 
 ### contact ###
 
