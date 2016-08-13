@@ -1,13 +1,13 @@
 
+pip install pick
+
 mkdir -p /usr/local/bin/versioner
 
-cp ./vs.py /usr/local/bin/versioner/
-
-cp ./versioner.py /usr/local/bin/versioner/
+cp ./files/vs.py /usr/local/bin/versioner/
 
 mkdir -p /etc/versioner
 
-cp ./versioner.cfg /etc/versioner/
+cp ./files/versioner.cfg /etc/versioner/
 
 echo "python /usr/local/bin/versioner/vs.py \$@" > /usr/local/bin/vs
 
