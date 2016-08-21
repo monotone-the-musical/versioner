@@ -39,18 +39,21 @@ if args.backup:
   args.backup = ' '.join(args.backup)
   thefile = versioner.loadfile(args.backup,"",args.comment)
   wrote = thefile.backup()
-  if not wrote[0] and not wrote[1]:
-    print ("\n%s already backed up.\n" % (thefile.meta[1]))
-  elif not wrote[1]:
-    print ("\n%s contents already backed up but new filename noted.\n" % (thefile.meta[1]))
+  newhash=wrote[0]
+  updatedhash=wrote[1]
+  thefilename=thefile.meta[1].keys()[0]
+  if not newhash and not updatedhash:
+    print ("\n%s already backed up.\n" % (thefilename))
+  elif not newhash and updatedhash:
+    print ("\n%s contents already backed up but new filename noted.\n" % (thefilename))
   else:
-    print ("\n%s backed up.\n" % (thefile.meta[1]))
+    print ("\n%s backed up.\n" % (thefilename))
 elif args.listbackups:
   args.listbackups = ' '.join(args.listbackups)
   thefile = versioner.loadfile(args.listbackups)
   if thefile.dironly:
     thefile.list_backups_for_dir()
-  elif thefile.meta[1] == "ALL":
+  elif thefile.meta[1].keys()[0] == "ALL":
     thefile.show_vault_contents()
   else:
     thefile.list_backups_by_name()

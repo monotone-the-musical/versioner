@@ -54,8 +54,11 @@ Some examples:
 ### Note ###
 
 * Versioner is not intended as a complete system backup solution, nor is it a complete version-control system (i.e. GIT). It is merely a command-line tool to help with your day-to-day workflow.
-* If you are installing for Python 3, you need to first run the following: cp files/loadfile.py.python3 versioner/loadfile.py
 * To uninstall: sudo -H files/uninstall.sh
+
+### To Do ###
+
+* Develop Python 3 versioner of versioner
 
 ### contact ###
 
