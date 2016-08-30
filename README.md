@@ -22,7 +22,7 @@ Other features include:
 
  - file-content hash checks ensuring only one physical file is backed up, even if you back-up multiple different filenames with the same content
  - vault-checking performed when restoring files, ensuring you don't restore over another file you haven't yet backed up 
- - easy navigation through the "pick" menu, allowing you to choose which file to restore. Or use the --latest flag to quickly restore to the newest version
+ - easy navigation through the "pick" menu (https://github.com/wong2/pick), allowing you to choose which file to restore. Or use the --latest flag to quickly restore to the newest version
  - delete versions of files from the vault at any time with the -d flag
  - see vault contents for specific files or directories, or even the entire vault, through the -l flag
  - each time the vault is updated, the previous version of the vault table-of-contents is itself backed up in the vault.
@@ -30,7 +30,7 @@ Other features include:
 
 ### Dependencies ###
 
-* pick - https://github.com/wong2/pick
+* pip (used during installation script)
 
 ### Instructions ###
 
