@@ -28,6 +28,7 @@ from operator import itemgetter
 #   gid               3
 #   perms             4
 #   versionval        5
+#   filesize          6
 
 blankfile="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
@@ -62,11 +63,13 @@ class loadfile(object):
       gid = os.stat(name).st_gid
       gid = grp.getgrgid(gid)[0]
       perms = os.stat(name).st_mode
+      filesize = os.path.getsize(name)
     else: # name does not exist: either restoring a deleted file or a grep string
       hashval = "0"
       uid = "unknown"
       gid = "unknown"
       perms = "unknown"
+      filesize = "0"
     if not self.dironly:
       self.meta.append(hashval)
       self.meta.append({name:comment})
@@ -75,6 +78,7 @@ class loadfile(object):
       self.meta.append(gid)
       self.meta.append(str(perms))
       self.meta.append(versionlabel)
+      self.meta.append(filesize)
 
   def backup(self):
     newhash=False
@@ -116,10 +120,10 @@ class loadfile(object):
       for filename, comment in thevallist[0].items():
         if filename == localfilename:
           if thehash == localhash:
-            versionlist.append([thehash,filename," X ",thevallist[5],comment])
+            versionlist.append([thehash,filename," X ",thevallist[5],comment,thevallist[6]])
             backedup=True
           else:
-            versionlist.append([thehash,filename,"   ",thevallist[5],comment])
+            versionlist.append([thehash,filename,"   ",thevallist[5],comment,thevallist[6]])
     if not backedup and self.meta[0] != "0":
       print ("\nWARNING: Current version not backed up!")
     elif backedup:
@@ -129,9 +133,9 @@ class loadfile(object):
       print ("\nVersions available:\n")
       for arecord in versionlist:
         if arecord[4] != "":
-          print (" > (%s) %s%s - %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
+          print (" - %s %11d %s%s - %s" % (arecord[3],arecord[5],basename(arecord[1]),arecord[2],arecord[4]))
         else:
-          print (" > (%s) %s%s" % (arecord[3],basename(arecord[1]),arecord[2]))
+          print (" - %s %11d %s%s" % (arecord[3],arecord[5],basename(arecord[1]),arecord[2]))
     print ("")
 
   def list_backups_for_dir(self):
@@ -140,15 +144,15 @@ class loadfile(object):
     for vaulthash, vaultlist in self.vtable.items():
       for vaultfile, comment in vaultlist[0].items():
         if os.path.dirname(vaultfile) == self.dirname:
-          versionlist.append([vaulthash,vaultfile,"   ",vaultlist[5],comment])
+          versionlist.append([vaulthash,vaultfile,"   ",vaultlist[5],comment,vaultlist[6]])
     if len(versionlist) > 0:
       versionlist=sorted(versionlist, key=itemgetter(3))
       print ("\nFiles that have been backed up in %s:\n" % (self.dirname))
       for arecord in versionlist:
         if arecord[4]:
-          print (" > (%s) %s%s - %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
+          print (" - %s %11d %s%s - %s" % (arecord[3],arecord[5],basename(arecord[1]),arecord[2],arecord[4]))
         else:
-          print (" > (%s) %s%s" % (arecord[3],basename(arecord[1]),arecord[2]))
+          print (" - %s %11d %s%s" % (arecord[3],arecord[5],basename(arecord[1]),arecord[2]))
     print ("")
 
   def restore_backups_for_dir(self,delfile=False):
@@ -157,12 +161,12 @@ class loadfile(object):
     for vaulthash, vaultval in self.vtable.items():
       for vaultfilename, comment in vaultval[0].items():
         if os.path.dirname(vaultfilename) == self.dirname:
-          versionlist.append([vaulthash,vaultfilename,"   ",vaultval[5],comment,vaultval[4]]) 
+          versionlist.append([vaulthash,vaultfilename,"   ",vaultval[5],comment,vaultval[4],vaultval[6]]) 
     if len(versionlist) > 0:
       versionlist=sorted(versionlist, key=itemgetter(3))
       menulist=[]
       for arecord in versionlist:
-        menulist.append(" (%s) %s%s %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
+        menulist.append(" %s %11d %s%s %s" % (arecord[3],arecord[6],basename(arecord[1]),arecord[2],arecord[4]))
       menulist.append(" abort")
       if delfile:
         option, index = pick(menulist, "Backups available for deletion from vault:")
@@ -195,15 +199,15 @@ class loadfile(object):
         hit = searchstring.search(vaultfilename)
         if hit:                                   
           if vaulthash == self.meta[0]:
-            versionlist.append([vaulthash,vaultfilename," X ",vaultval[5],comment,vaultval[4]])
+            versionlist.append([vaulthash,vaultfilename," X ",vaultval[5],comment,vaultval[4],vaultval[6]])
             backedup=True
           else:
-            versionlist.append([vaulthash,vaultfilename,"   ",vaultval[5],comment,vaultval[4]])
+            versionlist.append([vaulthash,vaultfilename,"   ",vaultval[5],comment,vaultval[4],vaultval[6]])
     if len(versionlist) > 0:
       versionlist=sorted(versionlist, key=itemgetter(3))
       menulist=[]
       for arecord in versionlist:
-        menulist.append(" (%s) %s%s %s" % (arecord[3],basename(arecord[1]),arecord[2],arecord[4]))
+        menulist.append(" %s %11d %s%s %s" % (arecord[3],arecord[6],basename(arecord[1]),arecord[2],arecord[4]))
       menulist.append(" abort")
       if delfile:
         option, index = pick(menulist, "Versions available for removal from vault:")
@@ -237,15 +241,15 @@ class loadfile(object):
     versionlist=[]
     for vaulthash, vaultval in self.vtable.items():
       for thefilename, comment in vaultval[0].items(): 
-        versionlist.append([vaulthash,thefilename,"   ",vaultval[5],comment]) #UPTO
+        versionlist.append([vaulthash,thefilename,"   ",vaultval[5],comment,vaultval[6]]) #UPTO
     if len(versionlist) > 0:
       versionlist=sorted(versionlist, key=itemgetter(3))
       print ("\nVault Contents:\n")
       for arecord in versionlist:
         if arecord[4] != "":
-          print (" > (%s) %s%s - %s" % (arecord[3],arecord[1],arecord[2],arecord[4]))
+          print (" - %s %11d %s%s - %s" % (arecord[3],arecord[5],arecord[1],arecord[2],arecord[4]))
         else:
-          print (" > (%s) %s%s" % (arecord[3],arecord[1],arecord[2]))
+          print (" - %s %11d %s%s" % (arecord[3],arecord[5],arecord[1],arecord[2]))
     print ("")
 
 def check_if_exists(localmetadata,vtable):
