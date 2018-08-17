@@ -1,0 +1,2 @@
+recursive-include files *
+include rpm_description.txt

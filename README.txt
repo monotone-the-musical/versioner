@@ -2,8 +2,7 @@
 
 ### Installation ###
 
-* sudo -H python setup.py install
-
+* ./install.sh
 
 ### Description ###
 
@@ -54,6 +53,7 @@ Some examples:
 ### Note ###
 
 * Versioner is not intended as a complete system backup solution, nor is it a complete version-control system (i.e. GIT). It is merely a command-line tool to help with your day-to-day workflow.
+* pre-built rpm packages can be found in files/rpms/
 * To uninstall: sudo -H files/uninstall.sh
 
 ### To Do ###

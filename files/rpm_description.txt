@@ -1,0 +1,10 @@
+
+Utility used for quickly backing up and restoring files.
+
+Developped by Adam because he has no life and this is the sort of
+shit he does on a Friday night.
+
+See https://github.com/monotone-the-musical/versioner for details.
+
+Type vs -h for syntax.
+
