@@ -4,6 +4,11 @@
 
 * ./install.sh
 
+* Optional install:
+ - if you are on an RPM based system, you can simply install the provided RPM files:
+  + cd files/rpms/
+  + ./00_rpm_install.sh
+ 
 ### Description ###
 
 Versioner is a utility designed for administrators to quickly and easily backup specific files whilst working from the CLI.
