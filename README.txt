@@ -5,9 +5,9 @@
 * ./install.sh
 
 * Optional install:
- - if you are on an RPM based system, you can simply install the provided RPM files:
+ - if you are on an RPM based system, you can simply install the provided RPM file:
   + cd files/rpms/
-  + ./00_rpm_install.sh
+  + ./install.sh
  
 ### Description ###
 

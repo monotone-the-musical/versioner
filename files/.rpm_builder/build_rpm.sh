@@ -1,3 +1,3 @@
 
-python ./setup.py bdist_rpm --requires pick
+python ./setup.py bdist_rpm
 
