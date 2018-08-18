@@ -34,7 +34,7 @@ Other features include:
 
 ### Dependencies ###
 
-* pip (used during installation script)
+* Python 2.7
 
 ### Instructions ###
 

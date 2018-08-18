@@ -6,6 +6,5 @@ rm -rf /etc/versioner
 rm -rf ~/.vault
 
 pip uninstall versioner
-pip uninstall pick
 
 exit

@@ -2,7 +2,7 @@
 from setuptools import setup
 from setuptools.command.install import install
 
-# new
+# rpm related
 import distutils.command.bdist_rpm
 import distutils.command.install
 
@@ -40,7 +40,6 @@ setup(
   author='Monotone The Musical',
   author_email='monotone.the.musical@gmail.com',
   packages=['versioner'],
-  install_requires=['pick'],
   license='The MIT License (MIT)',
   long_description=open('files/rpm_description.txt').read(),
   data_files=[('/usr/local/bin/versioner/', ['files/vs.py']),
